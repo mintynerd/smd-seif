@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Points Before Swarming - Ultimate Swarming Guide</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body style="background: #000;">
+    <div id="password-overlay" style="position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:#000;display:flex;align-items:center;justify-content:center;">
+        <form id="password-form" style="background:#fff;padding:2rem 2.5rem;border-radius:10px;box-shadow:0 2px 8px rgba(10,35,66,0.18);display:flex;flex-direction:column;align-items:center;">
+            <label for="password" style="font-size:1.2rem;margin-bottom:1rem;color:#0a2342;">Enter password to view the guide:</label>
+            <input type="password" id="password" style="padding:0.5rem 1rem;font-size:1rem;border-radius:5px;border:1px solid #ccc;margin-bottom:1rem;" autofocus>
+            <button type="submit" style="padding:0.5rem 1.5rem;background:#0a2342;color:#fff;border:none;border-radius:5px;font-size:1rem;cursor:pointer;">Enter</button>
+            <div id="password-error" style="color:#e8491d;margin-top:0.5rem;display:none;">Incorrect password. Try again.</div>
+        </form>
+    </div>
+    <header>
+        <h1>Key Points Before Swarming</h1>
+        <p>Ultimate Swarming Guide</p>
+    </header>
+    <main>
+        <h2>Coming Soon!</h2>
+        <p style="color:#aaa;text-align:center;font-size:1.2rem;">This section is under construction. Check back later for updates.</p>
+    </main>
+    <footer>
+        <nav>
+            <a href="starters.html">Swarming Starters</a>
+            <a href="gear.html">Gear for Swarming</a>
+            <a href="commanders.html">Best Commanders</a>
+            <a href="pairings.html">Best Pairings</a>
+            <a href="warleading.html">Warleading a Swarm</a>
+            <a href="keypoints.html">Key Points Before Swarming</a>
+            <a href="credits.html">Credits</a>
+        </nav>
+        &copy; 2025 Ultimate Swarming Guide &mdash; All rights reserved.
+    </footer>
+    <script>
+        // Password protection with localStorage
+        const PASSWORD = "SeifStinks123";
+        const overlay = document.getElementById('password-overlay');
+        const form = document.getElementById('password-form');
+        const input = document.getElementById('password');
+        const error = document.getElementById('password-error');
+        let attempts = 0;
+
+        if (localStorage.getItem('swarmGuideAccess') === 'true') {
+            overlay.style.display = 'none';
+            document.body.style.background = '';
+        }
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (input.value === PASSWORD) {
+                overlay.style.display = 'none';
+                document.body.style.background = '';
+                localStorage.setItem('swarmGuideAccess', 'true');
+            } else {
+                attempts++;
+                error.style.display = 'block';
+                input.value = '';
+                input.focus();
+                if (attempts >= 10) {
+                    document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#000;"><h1 style="color:#fff;font-size:3rem;">Fuck off Spy</h1></div>';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
