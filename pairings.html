@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best Pairings - Ultimate Swarming Guide</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body style="background: #000;">
+    <div id="password-overlay" style="position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:#000;display:flex;align-items:center;justify-content:center;">
+        <form id="password-form" style="background:#fff;padding:2rem 2.5rem;border-radius:10px;box-shadow:0 2px 8px rgba(10,35,66,0.18);display:flex;flex-direction:column;align-items:center;">
+            <label for="password" style="font-size:1.2rem;margin-bottom:1rem;color:#0a2342;">Enter password to view the guide:</label>
+            <input type="password" id="password" style="padding:0.5rem 1rem;font-size:1rem;border-radius:5px;border:1px solid #ccc;margin-bottom:1rem;" autofocus>
+            <button type="submit" style="padding:0.5rem 1.5rem;background:#0a2342;color:#fff;border:none;border-radius:5px;font-size:1rem;cursor:pointer;">Enter</button>
+            <div id="password-error" style="color:#e8491d;margin-top:0.5rem;display:none;">Incorrect password. Try again.</div>
+        </form>
+    </div>
+    <header>
+        <h1>Best Pairings</h1>
+        <p>Ultimate Swarming Guide</p>
+    </header>
+    <main>
+        <h2>Best Pairings for Swarming</h2>
+        <div style="display: flex; gap: 1rem; margin-bottom: 2rem; justify-content: center;">
+            <a href="#" id="overall-link" style="padding:0.7rem 1.5rem; background:#0a2342; color:#fff; border-radius:6px; text-decoration:none; font-weight:bold;">Overall</a>
+            <a href="#" id="infantry-link" style="padding:0.7rem 1.5rem; background:#0a2342; color:#fff; border-radius:6px; text-decoration:none; font-weight:bold;">Infantry</a>
+            <a href="#" id="cavalry-link" style="padding:0.7rem 1.5rem; background:#0a2342; color:#fff; border-radius:6px; text-decoration:none; font-weight:bold;">Cavalry</a>
+            <a href="#" id="archers-link" style="padding:0.7rem 1.5rem; background:#0a2342; color:#fff; border-radius:6px; text-decoration:none; font-weight:bold;">Archers</a>
+        </div>
+        <div id="pairings-content">
+            <p>Select a tab above to view the best pairings for swarming.</p>
+        </div>
+    </main>
+    <footer>
+        <nav>
+            <a href="starters.html">Swarming Starters</a>
+            <a href="gear.html">Gear for Swarming</a>
+            <a href="commanders.html">Best Commanders</a>
+            <a href="pairings.html">Best Pairings</a>
+            <a href="warleading.html">Warleading a Swarm</a>
+            <a href="keypoints.html">Key Points Before Swarming</a>
+            <a href="credits.html">Credits</a>
+        </nav>
+        &copy; 2025 Ultimate Swarming Guide &mdash; All rights reserved.
+    </footer>
+    <script>
+        // Simple password protection (client-side only)
+        const PASSWORD = "SeifStinks123";
+        const overlay = document.getElementById('password-overlay');
+        const form = document.getElementById('password-form');
+        const input = document.getElementById('password');
+        const error = document.getElementById('password-error');
+        let attempts = 0;
+
+        // Check localStorage on load
+        if (localStorage.getItem('swarmGuideAccess') === 'true') {
+            overlay.style.display = 'none';
+            document.body.style.background = '';
+        }
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (input.value === PASSWORD) {
+                overlay.style.display = 'none';
+                document.body.style.background = '';
+                localStorage.setItem('swarmGuideAccess', 'true'); // Set flag
+            } else {
+                attempts++;
+                error.style.display = 'block';
+                input.value = '';
+                input.focus();
+                if (attempts >= 10) {
+                    document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#000;"><h1 style="color:#fff;font-size:3rem;">Fuck off Spy</h1></div>';
+                }
+            }
+        });
+    </script>
+    <script src="index.js"></script>
+    <script>
+    const pairingsData = {
+      infantry: `
+            <h3>Infantry Pairings</h3>
+            <ul>
+                <li>Scipio Prime + Sargon</li>
+                <li>Guan Yu + Scipio Prime</li>
+                <li>Pakal + Harald</li>
+                <li>Alex + Charles</li>
+            </ul>
+        `,
+        cavalry: `
+            <h3>Cavalry Pairings</h3>
+            <ul>
+                <li>XY + Nevsky</li>
+                <li>Attila + Takeda</li>
+                <li>Honda + Nevsky</li>
+                <li>William + Saladin</li>
+            </ul>
+        `,
+        archers: `
+            <h3>Archer Pairings</h3>
+            <ul>
+                <li>Boudica Prime + Henry</li>
+                <li>Nebu + Artemisia</li>
+                <li>Gilgamesh + Henry</li>
+                <li>Ramesses + Yi Seong-Gye</li>
+            </ul>
+        `
+    };
+
+    function getCavFormationOptions(count) {
+        if (count === 1) {
+            return `
+                <div style="margin-bottom:1rem;">
+                    <label style="display:block;margin-bottom:0.5rem;">What formation does your <b>Cavalry</b> have?</label>
+                    <select name="cavFormation1" required style="width:100%;padding:0.4rem;">
+                        <option value="wedge">Wedge</option>
+                        <option value="delta">Delta</option>
+                    </select>
+                </div>
+            `;
+        }
+        if (count === 2) {
+            return `
+                <div style="margin-bottom:1rem;">
+                    <label style="display:block;margin-bottom:0.5rem;">What formation does your <b>Cavalry</b> have?</label>
+                    <select name="cavFormation2" required style="width:100%;padding:0.4rem;">
+                        <option value="wedge-delta">1 Wedge 1 Delta</option>
+                        <option value="2wedge">2 Wedge</option>
+                    </select>
+                </div>
+            `;
+        }
+        if (count === 3) {
+            return `
+                <div style="margin-bottom:1rem;">
+                    <label style="display:block;margin-bottom:0.5rem;">What formation does your <b>Cavalry</b> have?</label>
+                    <select name="cavFormation3" required style="width:100%;padding:0.4rem;">
+                        <option value="2wedge-1delta">2 Wedge 1 Delta</option>
+                    </select>
+                </div>
+            `;
+        }
+        return '';
+    }
+
+    function getInfFormationOptions(count) {
+        if (count === 1) {
+            return `
+                <div style="margin-bottom:1rem;">
+                    <label style="display:block;margin-bottom:0.5rem;">What formation does your <b>Infantry</b> have?</label>
+                    <select name="infFormation1" required style="width:100%;padding:0.4rem;">
+                        <option value="arch">Arch/Pincer</option>
+                        <option value="wedge">Wedge</option>
+                    </select>
+                </div>
+            `;
+        }
+        if (count === 2) {
+            return `
+                <div style="margin-bottom:1rem;">
+                    <label style="display:block;margin-bottom:0.5rem;">What formation does your <b>Infantry</b> have?</label>
+                    <select name="infFormation2" required style="width:100%;padding:0.4rem;">
+                        <option value="1arch-1pincer">2 Arch/Pincer</option>
+                        <option value="2wedge">2 Wedge</option>
+                    </select>
+                </div>
+            `;
+        }
+        if (count === 3) {
+            return `
+                <div style="margin-bottom:1rem;">
+                    <label style="display:block;margin-bottom:0.5rem;">What formation does your <b>Infantry</b> have?</label>
+                    <select name="infFormation3" required style="width:100%;padding:0.4rem;">
+                        <option value="2pincer-1wedge">2 Arch/Pincer + 1 Wedge</option>
+                        <option value="2wedge-1pincer">2 Wedge + 1 Arch/Pincer</option>
+                    </select>
+                </div>
+            `;
+        }
+        return '';
+    }
+
+    function getArchFormationOptions(count) {
+        if (count > 0) {
+            return `
+                <div style="margin-bottom:1rem;">
+                    <label style="display:block;margin-bottom:0.5rem;">What formation does your <b>Archers</b> have?</label>
+                    <select name="archFormation" required style="width:100%;padding:0.4rem;">
+                        <option value="wedge">Wedge</option>
+                    </select>
+                </div>
+            `;
+        }
+        return '';
+    }
+
+    function getOverallForm() {
+        return `
+            <h3>Custom Pairing Recommendation</h3>
+            <form id="overall-form" style="display:flex;flex-direction:column;gap:1rem;max-width:350px;margin:auto;">
+                <label>
+                    Number of Cavalry marches:
+                    <select name="cavs" id="cavs-select">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </label>
+                <label>
+                    Number of Infantry marches:
+                    <select name="inf" id="inf-select">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </label>
+                <label>
+                    Number of Archer marches:
+                    <select name="arch" id="arch-select">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </label>
+                <div id="formation-questions"></div>
+                <div id="overall-error" style="color:#e8491d;display:none;"></div>
+                <button type="submit" style="padding:0.5rem 1.5rem;background:#0a2342;color:#fff;border:none;border-radius:5px;font-size:1rem;cursor:pointer;">Show Recommendations</button>
+            </form>
+            <div id="overall-results" style="margin-top:2rem;"></div>
+        `;
+    }
+
+    function getPairingResults(cavs, inf, arch, cavForm, infForm, archForm) {
+        let html = '';
+
+        // Cavalry pairings
+        if (cavs > 0) {
+            html += `<h4>Cavalry</h4><ol>`;
+            if (cavs === 1) {
+                if (cavForm === "wedge") {
+                    html += `<li>Nevsky + Justinian<br>
+                        <span style="font-size:0.95em;color:#aaa;">Alternatives: Nevsky + Beli or Huo + Nevsky</span>
+                    </li>`;
+                } else if (cavForm === "delta") {
+                    html += `<li>Arthur + Subutai<br>
+                        <span style="font-size:0.95em;color:#aaa;">Note: Bert is trash since being converted</span>
+                    </li>`;
+                }
+            }
+            if (cavs === 2) {
+                if (cavForm === "2wedge") {
+                    html += `<li>Nevsky + Beli</li>
+                             <li>Huo + Justinian</li>`;
+                } else if (cavForm === "wedge-delta") {
+                    html += `<li>Nevsky + Beli<br>
+                        <span style="font-size:0.95em;color:#aaa;">Alternatives: Nevsky + Huo or Huo + Nevsky</span>
+                    </li>
+                    <li>Arthur + Subutai</li>`;
+                }
+            }
+            if (cavs === 3) {
+                // Always 2 wedge 1 delta for 3
+                html += `<li>Nevsky + Beli</li>
+                         <li>Huo + Justinian</li>
+                         <li>Arthur + Subutai</li>`;
+            }
+            html += `</ol>
+            <div style="margin-top:0.5rem;font-size:0.97em;color:#7ad;">
+                <b>Other available cavalry commanders:</b> Joan of Arc Prime, Minamoto
+            </div>`;
+        }
+
+        // Infantry pairings (updated, merged Arch/Pincer, fixed formation logic)
+        if (inf > 0) {
+            html += `<h4>Infantry</h4><ol>`;
+            // 1 march
+            if (inf === 1) {
+                if (infForm === "arch") {
+                    html += `<li>Scipio Aemilianus + Liuche</li>`;
+                } else if (infForm === "wedge") {
+                    html += `<li>Ragnar + Tariq</li>`;
+                }
+            }
+            // 2 marches
+            if (inf === 2) {
+                if (infForm === "1arch-1pincer") {
+                    html += `<li>Scipio Aemilianus + Liuche</li>`;
+                    html += `<li>BQ + Wallace</li>`;
+                } else if (infForm === "2wedge") {
+                    html += `<li>Ragnar + Tariq</li>`;
+                    html += `<li>Guan Yu + Scipio</li>`;
+                }
+            }
+            // 3 marches
+            if (inf === 3) {
+                if (infForm === "2pincer-1wedge") {
+                    html += `<li>Scipio Aemilianus + Liuche</li>`;
+                    html += `<li>BQ + Wallace</li>`;
+                    html += `<li>Ragnar + Tariq</li>`;
+                } else if (infForm === "2wedge-1pincer") {
+                    html += `<li>Ragnar + Tariq</li>`;
+                    html += `<li>Guan Yu + Scipio</li>`;
+                    html += `<li>Scipio Aemilianus + Liuche</li>`;
+                }
+            }
+            html += `</ol>`;
+        }
+
+        // Archers (styled like cavalry)
+        if (arch > 0) {
+            html += `<h4>Archers</h4><ol>`;
+            if (arch === 1) {
+                html += `<li>Ashur + Henry<br>
+                    <span style="font-size:0.95em;color:#aaa;">Alternatives: Zhuge + Hermann, QSH + Zhuge</span>
+                </li>`;
+            }
+            if (arch === 2) {
+                html += `<li>Ashur + Henry<br>Zhuge + Hermann<br>
+                    <span style="font-size:0.95em;color:#aaa;">Alternative: QSH + Zhuge</span>
+                </li>`;
+            }
+            if (arch === 3) {
+                html += `<li>Ashur + Henry<br>Zhuge + Hermann<br>QSH + YSG<br>
+                    <span style="font-size:0.95em;color:#aaa;">
+                        Alternatives:
+                        <ul style="margin:0 0 0 1.2em;padding:0;">
+                            <li>Boudica + Ashur</li>
+                            <li>QSH + Zhuge</li>
+                            <li>Shajar + YSG</li>
+                            <li>Shajar + Ashur</li>
+                            <li>Shajar + ZL</li>
+                        </ul>
+                    </span>
+                </li>`;
+            }
+            html += `</ol>`;
+        }
+
+        if (!html) html = `<p>Please select at least one march.</p>`;
+        return html;
+    }
+
+    document.getElementById('overall-link').onclick = function(e) {
+        e.preventDefault();
+        document.getElementById('pairings-content').innerHTML = getOverallForm();
+
+        const form = document.getElementById('overall-form');
+        const cavsSelect = document.getElementById('cavs-select');
+        const infSelect = document.getElementById('inf-select');
+        const archSelect = document.getElementById('arch-select');
+        const errorDiv = document.getElementById('overall-error');
+        const formationDiv = document.getElementById('formation-questions');
+
+        function updateFormationQuestions() {
+            const cavs = parseInt(cavsSelect.value, 10);
+            const inf = parseInt(infSelect.value, 10);
+            const arch = parseInt(archSelect.value, 10);
+            let html = '';
+            if (cavs > 0) html += getCavFormationOptions(cavs);
+            if (inf > 0) html += getInfFormationOptions(inf);
+            if (arch > 0) html += getArchFormationOptions(arch);
+            formationDiv.innerHTML = html;
+        }
+
+        function validateTotal() {
+            const cavs = parseInt(cavsSelect.value, 10);
+            const inf = parseInt(infSelect.value, 10);
+            const arch = parseInt(archSelect.value, 10);
+            const total = cavs + inf + arch;
+            if (total > 7) {
+                errorDiv.style.display = 'block';
+                errorDiv.textContent = 'You can only have 7 marches in Rise of Kingdoms';
+                return false;
+            } else {
+                errorDiv.style.display = 'none';
+                return true;
+            }
+        }
+
+        cavsSelect.onchange = infSelect.onchange = archSelect.onchange = function() {
+            validateTotal();
+            updateFormationQuestions();
+        };
+
+        updateFormationQuestions();
+
+        form.onsubmit = function(ev) {
+            ev.preventDefault();
+            if (!validateTotal()) return;
+            // Get formation answers
+            const cavs = parseInt(form.cavs.value, 10);
+            const inf = parseInt(form.inf.value, 10);
+            const arch = parseInt(form.arch.value, 10);
+            let cavForm = '';
+            let infForm = '';
+            let archForm = '';
+            if (cavs > 0) {
+                if (cavs === 1) cavForm = form.cavFormation1?.value || '';
+                if (cavs === 2) cavForm = form.cavFormation2?.value || '';
+                if (cavs === 3) cavForm = form.cavFormation3?.value || '';
+            }
+            if (inf > 0) {
+                if (inf === 1) infForm = form.infFormation1?.value || '';
+                if (inf === 2) infForm = form.infFormation2?.value || '';
+                if (inf === 3) infForm = form.infFormation3?.value || '';
+            }
+            if (arch > 0) {
+                archForm = form.archFormation?.value || '';
+            }
+            document.getElementById('overall-results').innerHTML = getPairingResults(cavs, inf, arch, cavForm, infForm, archForm);
+        };
+    };
+    const cavalryTabHtml = `
+        <h3>Cavalry Pairings</h3>
+        <ul>
+            <li>
+                <b>1 Cavalry March</b>
+                <ul>
+                    <li>
+                        <b>Wedge:</b> Nevsky + Justinian<br>
+                        <span style="font-size:0.95em;color:#aaa;">Alternatives: Nevsky + Beli or Huo + Nevsky</span>
+                    </li>
+                    <li>
+                        <b>Delta:</b> Arthur + Subutai<br>
+                        <span style="font-size:0.95em;color:#aaa;">Note: Bert is trash since being converted</span>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <b>2 Cavalry Marches</b>
+                <ul>
+                    <li>
+                        <b>2 Wedge:</b> Nevsky + Beli, Huo + Justinian
+                    </li>
+                    <li>
+                        <b>1 Wedge 1 Delta:</b> Nevsky + Beli
+                        <br>
+                        <span style="font-size:0.95em;color:#aaa;">Alternatives: Nevsky + Huo or Huo + Nevsky</span>
+                        <br>
+                        Arthur + Subutai
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <b>3 Cavalry Marches</b>
+                <ul>
+                    <li>
+                        <b>2 Wedge 1 Delta:</b> Nevsky + Beli, Huo + Justinian, Arthur + Subutai
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div style="margin-top:0.5rem;font-size:0.97em;color:#7ad;">
+            <b>Other available cavalry commanders:</b> Joan of Arc Prime, Minamoto
+        </div>
+    `;
+    document.getElementById('cavalry-link').onclick = function(e) {
+        e.preventDefault();
+        document.getElementById('pairings-content').innerHTML = cavalryTabHtml;
+    };
+    const archersTabHtml = `
+        <h3>Archer Pairings</h3>
+        <ul>
+            <li>
+                <b>1 Archer March</b>
+                <ul>
+                    <li>
+                        Ashur + Henry
+                    </li>
+                    <li>
+                        <span style="font-size:0.95em;color:#aaa;">Alternatives: Zhuge + Hermann, QSH + Zhuge</span>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <b>2 Archer Marches</b>
+                <ul>
+                    <li>
+                        Ashur + Henry<br>
+                        Zhuge + Hermann
+                    </li>
+                    <li>
+                        <span style="font-size:0.95em;color:#aaa;">Alternative: QSH + Zhuge</span>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <b>3 Archer Marches</b>
+                <ul>
+                    <li>
+                        Ashur + Henry<br>
+                        Zhuge + Hermann<br>
+                        QSH + YSG
+                    </li>
+                    <li>
+                        <span style="font-size:0.95em;color:#aaa;">
+                            Alternatives:
+                            <ul style="margin:0 0 0 1.2em;padding:0;">
+                                <li>Boudica + Ashur</li>
+                                <li>QSH + Zhuge</li>
+                                <li>Shajar + YSG</li>
+                                <li>Shajar + Ashur</li>
+                                <li>Shajar + ZL</li>
+                            </ul>
+                        </span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    `;
+    document.getElementById('archers-link').onclick = function(e) {
+        e.preventDefault();
+        document.getElementById('pairings-content').innerHTML = archersTabHtml;
+    };
+
+    // Add to overall tab below the recommendations
+    function getPairingResults(cavs, inf, arch, cavForm, infForm, archForm) {
+        let html = '';
+
+        // Cavalry pairings (as before)
+        if (cavs > 0) {
+            html += `<h4>Cavalry</h4><ol>`;
+            if (cavs === 1) {
+                if (cavForm === "wedge") {
+                    html += `<li>Nevsky + Justinian<br>
+                        <span style="font-size:0.95em;color:#aaa;">Alternatives: Nevsky + Beli or Huo + Nevsky</span>
+                    </li>`;
+                } else if (cavForm === "delta") {
+                    html += `<li>Arthur + Subutai<br>
+                        <span style="font-size:0.95em;color:#aaa;">Note: Bert is trash since being converted</span>
+                    </li>`;
+                }
+            }
+            if (cavs === 2) {
+                if (cavForm === "2wedge") {
+                    html += `<li>Nevsky + Beli</li>
+                             <li>Huo + Justinian</li>`;
+                } else if (cavForm === "wedge-delta") {
+                    html += `<li>Nevsky + Beli<br>
+                        <span style="font-size:0.95em;color:#aaa;">Alternatives: Nevsky + Huo or Huo + Nevsky</span>
+                    </li>
+                    <li>Arthur + Subutai</li>`;
+                }
+            }
+            if (cavs === 3) {
+                html += `<li>Nevsky + Beli</li>
+                         <li>Huo + Justinian</li>
+                         <li>Arthur + Subutai</li>`;
+            }
+            html += `</ol>
+            <div style="margin-top:0.5rem;font-size:0.97em;color:#7ad;">
+                <b>Other available cavalry commanders:</b> Joan of Arc Prime, Minamoto
+            </div>`;
+        }
+
+        // Infantry pairings (updated, merged Arch/Pincer, fixed formation logic)
+        if (inf > 0) {
+            html += `<h4>Infantry</h4><ol>`;
+            // 1 march
+            if (inf === 1) {
+                if (infForm === "arch") {
+                    html += `<li>Scipio Aemilianus + Liuche</li>`;
+                } else if (infForm === "wedge") {
+                    html += `<li>Ragnar + Tariq</li>`;
+                }
+            }
+            // 2 marches
+            if (inf === 2) {
+                if (infForm === "1arch-1pincer") {
+                    html += `<li>Scipio Aemilianus + Liuche</li>`;
+                    html += `<li>BQ + Wallace</li>`;
+                } else if (infForm === "2wedge") {
+                    html += `<li>Ragnar + Tariq</li>`;
+                    html += `<li>Guan Yu + Scipio</li>`;
+                }
+            }
+            // 3 marches
+            if (inf === 3) {
+                if (infForm === "2pincer-1wedge") {
+                    html += `<li>Scipio Aemilianus + Liuche</li>`;
+                    html += `<li>BQ + Wallace</li>`;
+                    html += `<li>Ragnar + Tariq</li>`;
+                } else if (infForm === "2wedge-1pincer") {
+                    html += `<li>Ragnar + Tariq</li>`;
+                    html += `<li>Guan Yu + Scipio</li>`;
+                    html += `<li>Scipio Aemilianus + Liuche</li>`;
+                }
+            }
+            html += `</ol>`;
+        }
+
+        // Archers (unchanged)
+        if (arch > 0) {
+            html += `<h4>Archers</h4><ol>`;
+            if (arch === 1) {
+                html += `<li>Ashur + Henry<br>
+                    <span style="font-size:0.95em;color:#aaa;">Alternatives: Zhuge + Hermann, QSH + Zhuge</span>
+                </li>`;
+            }
+            if (arch === 2) {
+                html += `<li>Ashur + Henry<br>Zhuge + Hermann<br>
+                    <span style="font-size:0.95em;color:#aaa;">Alternative: QSH + Zhuge</span>
+                </li>`;
+            }
+            if (arch === 3) {
+                html += `<li>Ashur + Henry<br>Zhuge + Hermann<br>QSH + YSG<br>
+                    <span style="font-size:0.95em;color:#aaa;">
+                        Alternatives:
+                        <ul style="margin:0 0 0 1.2em;padding:0;">
+                            <li>Boudica + Ashur</li>
+                            <li>QSH + Zhuge</li>
+                            <li>Shajar + YSG</li>
+                            <li>Shajar + Ashur</li>
+                            <li>Shajar + ZL</li>
+                        </ul>
+                    </span>
+                </li>`;
+            }
+            html += `</ol>`;
+        }
+
+        if (!html) html = `<p>Please select at least one march.</p>`;
+        return html;
+    }
+    </script>
+    <script>
+    const infantryTabHtml = `
+        <h3>Infantry Pairings</h3>
+        <ul>
+            <li>
+                <b>1 Infantry March</b>
+                <ul>
+                    <li>
+                        <b>Arch/Pincer:</b> Scipio Aemilianus + Liuche
+                    </li>
+                    <li>
+                        <b>Wedge:</b> Ragnar + Tariq
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <b>2 Infantry Marches</b>
+                <ul>
+                    <li>
+                        <b>Arch/Pincer:</b> Scipio Aemilianus + Liuche<br>
+                        BQ + Wallace
+                    </li>
+                    <li>
+                        <b>Wedge:</b> Ragnar + Tariq<br>
+                        Guan Yu + Scipio
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <b>3 Infantry Marches</b>
+                <ul>
+                    <li>
+                        <b>2 Arch/Pincer + 1 Wedge:</b> Scipio Aemilianus + Liuche<br>
+                        BQ + Wallace<br>
+                        Ragnar + Tariq
+                    </li>
+                    <li>
+                        <b>2 Wedge + 1 Arch/Pincer:</b> Ragnar + Tariq<br>
+                        Guan Yu + Scipio<br>
+                        Scipio Aemilianus + Liuche
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    `;
+
+    document.getElementById('infantry-link').onclick = function(e) {
+        e.preventDefault();
+        document.getElementById('pairings-content').innerHTML = infantryTabHtml;
+    };
+    </script>
+</body>
+</html>
